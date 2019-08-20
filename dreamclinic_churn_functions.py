@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+import datetime as dt
+import pandas as pd
+import numpy as np
 
 def clean_df(df):
     """Takes in a Pandas Dataframe from Dreamclinic
@@ -52,12 +54,12 @@ def sum_client_agg(groupby_obj):
 
 def clean_agg_df(client_count_df):
     """Cleans aggregaged df from unique_client_agg and total_client_agg."""
-    client_count_df.drop('TransactionDate', axis=1, inplace=True)
-    date_column = client_count_df['TransactionDate']
+    client_count_df = client_count_df.drop('TransactionDate', axis=1)
+    client_count_df['month'] = client_count_df.index
     client_count_df.reset_index(inplace=True)
     client_count_df["client_count"] = client_count_df['clientID']
     client_count_df.drop('clientID', axis=1, inplace=True)
-    date_column = date_column.astype('str')
+    client_count_df['month'] = client_count_df['month'].astype('str')
     client_count_df.rename(columns={"clientID": "unique_client_count",
                                     "Therapist": "therapists_employed",
                                     "Zipcode": "zipcodes_reached"},
@@ -93,3 +95,31 @@ def session_count_graph(session_count, min_sessions, max_sessions):
     plt.title('Amount of clients that get X number of Session')
     plt.xticks(ticks=(range(min_sessions, (max_sessions + 1))))
     return plt.show
+
+def temporal_split(df,
+                    start_year=2019,
+                    start_month=6,
+                    start_day=1,
+                    end_year=2019,
+                    end_month=8,
+                    end_day=1):
+    """Starts with client_df, returns DataFrame of clients labeled churn or not"""
+    #cuts the data temporally to the last 2 months so that we can label the data for modeling
+    start = df['TransactionDate'].searchsorted(dt.datetime(start_year,
+                                                            start_month,
+                                                            start_day))
+    end = df['TransactionDate'].searchsorted(dt.datetime(end_year,
+                                                            end_month,
+                                                            end_day))
+    #DataFrame used as labeling data
+    not_churn_df = df.iloc[start:end]
+    not_churn_df['churn'] = False
+    labeling_df = pd.DataFrame(not_churn_df['clientID'].unique())
+    labeling_df['churn'] = False
+    labeling_df = labeling_df.rename({0 : 'clientID'},axis=1)
+    churn_df = df.merge(labeling_df,
+                               how='left',
+                               on='clientID')
+    churn_df['churn'] = churn_df['churn'].fillna(value=True)
+    churn_df['Service_Category'] = churn_df['Service_Category'].replace(np.nan, 'Massage')
+    return churn_df
