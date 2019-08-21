@@ -6,19 +6,25 @@ I work at a Dreamclinic Massage in Seattle. Clients come in and use our services
 
 
 # Client Data -
-Date of visit
-Length of service
-Who they received massage/acupuncture from
-Zip code they live in
-If they were referred or not and by whom
-Regence vs other Insurance vs OOP payment
 
-The client data from August 2016 to August 2019 is avialable in the .pkl file in this repo
+There are ~110,000 entries of client data.
+The client data from August 2016 to August 2019 is avialable in the client_df.pkl file in this repo
+Date of visit
+Who they received massage/acupuncture from
+What service they recieved
+Length of service
+Zip code they live in
+
 
 # Data Preparation -
 I dealt with missing values. I will define a ‘churn instance’ when a client hasn’t had a massage in the last 2 months.
-I also aggregated the features I wanted for my modeling which includes:
+I also aggregated the features I wanted for my modeling which include:
 
+1. How many times they have come in.
+2. Which therapist they've seen and how many times they've seen them.
+3. Which zipcode they live in.
+4. What their average session length is.
+5. How many hours they've recieved massage.
 
 # Modeling -
 I split the data into training and testing clients to develop a model for predicting churn risk.
