@@ -1,5 +1,4 @@
-# Dreamclinc Customer Churn - 
-# Flatiron Data Science Bootcamp Capstone Project
+# Dreamclinic Customer Churn - 
 
 # Business Understanding -
 
