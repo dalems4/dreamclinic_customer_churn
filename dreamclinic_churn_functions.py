@@ -1,9 +1,23 @@
-import matplotlib.pyplot as plt
-import seaborn as sns
-import datetime as dt
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import sqlalchemy
+import datetime as dt
+from sklearn.linear_model import LogisticRegression
+from dreamclinic_churn_functions import *
+import pickle
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import roc_auc_score, roc_curve
 from sklearn.metrics import confusion_matrix
+from sklearn_pandas import DataFrameMapper, FunctionTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.metrics import average_precision_score
+from sklearn.metrics import precision_recall_curve
+from inspect import signature
 
 
 def clean_df(df):
@@ -153,7 +167,6 @@ def session_count(df):
     return session_count_df, session_count
 
 
-
 def temporal_split_test(churn_df,
                         start_year=2018, 
                         start_month=12, 
@@ -249,3 +262,37 @@ def plot_confusion_matrix(y_true, y_pred, classes,
                     color="white" if cm[i, j] > thresh else "black")
     fig.tight_layout()
     return ax
+
+
+def plot_prc(y_test, y_score_log_reg, ax):
+    average_precision = average_precision_score(y_test,
+                                                y_score_log_reg)
+    precision, recall, _ = precision_recall_curve(y_test,
+                                                y_score_log_reg)
+
+    # In matplotlib < 1.5, plt.fill_between does not have a 'step' argument
+    step_kwargs = ({'step': 'post'}
+                if 'step' in signature(plt.fill_between).parameters
+                else {})
+    ax.step(recall, precision, color='b', alpha=0.2,
+            where='post')
+    ax.fill_between(recall, precision, alpha=0.2, color='b', **step_kwargs)
+
+    ax.set_xlabel('Recall')
+    ax.set_ylabel('Precision')
+    ax.set_ylim([0.0, 1.05])
+    ax.set_xlim([0.0, 1.0])
+    ax.set_title('AP={0:0.2f}'.format(
+            average_precision))
+    return None 
+
+
+def plot_roc(X_train, X_test, y_train, y_test, model):
+    X_prob = model.predict_proba(X_test)[:, -1]
+    fpr_grad_boost, tpr_grad_boost, thresholds_grad_boost = roc_curve(y_test,
+                                                                      X_prob)
+    plt.plot(fpr_grad_boost, tpr_grad_boost, marker='.')
+    plt.xlabel("False Positive Rate")
+    plt.ylabel("True Positive Rate")
+    plt.title("ROC curve for Predicting Client Churn")
+    plt.show();
