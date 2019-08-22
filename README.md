@@ -35,3 +35,6 @@ I looked at the pression and recall of both of the models to give me CEO more da
 
 ## Deployment -
 I showed the EDA and final model prediction capabilities to my CEO so that she can make data driven decisions on how to engage with our clientile that is churning or not.
+
+### Presentation Link:
+https://docs.google.com/presentation/d/1Ysxvsx8TlXU9UzJRwUkjhwx-4qk8lmAB_9pOEiAmRcM/edit?usp=sharing
