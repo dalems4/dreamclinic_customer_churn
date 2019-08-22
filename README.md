@@ -28,7 +28,9 @@ I also aggregated the features I wanted for my modeling which include:
 
 ## Modeling -
 I split the data into training and testing clients to develop a model for predicting churn risk.
-I took the last 3 years of Client data and ran it through a Logistic Regression and a Random Forest Classifier
+I took the last 3 years of Client data and ran it through a Logistic Regression, Random Forest Classifier, and Grandient Boosting.
+
+I have the ROC and Precision-Recall curves to all my CEO to make decisions based on future workflows.
 
 ## Evaluation -
 I looked at the pression and recall of both of the models to give me CEO more data on how we could be making business decisions to reduce client churn.
