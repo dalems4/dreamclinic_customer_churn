@@ -8,16 +8,11 @@ I work at a Dreamclinic Massage in Seattle. Clients come in and use our services
 ## Client Data -
 
 There are ~110,000 entries of client data.
-The client data from August 2016 to August 2019 is avialable in the client_df.pkl file in this repo
-Date of visit
-Who they received massage/acupuncture from
-What service they recieved
-Length of service
-Zip code they live in
+The client data from August 2016 to August 2019 is avialable in the client_df.pkl file in this repo.
 
 
 ## Data Preparation -
-I dealt with missing values. I will define a ‘churn instance’ when a client hasn’t had a massage in the last 2 months.
+I dealt with missing values. I defined a ‘churn instance’ as when a client hasn’t had a massage in the last 2 months.
 I also aggregated the features I wanted for my modeling which include:
 
 1. How many times they have come in.
