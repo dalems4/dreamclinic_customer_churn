@@ -2,7 +2,7 @@
 
 ## Business Understanding -
 
-I work at a Dreamclinic Massage in Seattle. Clients come in and use our services for some amount of time and then stop coming. We also have therapists that have been calling out last minute for injury reasons which causes use to have to last minute cancel/reschedule on their clients which hurts the overall moral of clients and therapists.
+I work at a Dreamclinic Massage in Seattle. Clients come in and use our services for some amount of time and then stop coming. We also have therapists that have been calling out last minute for injury reasons which causes therapists to last minute cancel/reschedule on their clients which hurts the overall moral of both clients and therapists.
 
 
 ## Client Data -
